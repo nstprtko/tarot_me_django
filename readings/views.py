@@ -11,6 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 with open(BASE_DIR/"data"/"tarot_cards.json", "r", encoding='utf-8') as f:
     tarot_cards = json.load(f)
     
+def index_view(request):
+    return render(request, 'readings/index.html')
+
+
 def draw_three_cards():
     cards = random.sample(tarot_cards, 3)
     for c in cards:
