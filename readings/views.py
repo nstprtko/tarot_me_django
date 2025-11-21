@@ -1,52 +1,86 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+from .utils import generate_ai_reading, get_random_cards, deterministic_card_of_day
+from .models import Reading
 import random 
 import json
 import requests
 from pathlib import Path
-
-# base_dir points to where root
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-with open(BASE_DIR/"data"/"tarot_cards.json", "r", encoding='utf-8') as f:
-    tarot_cards = json.load(f)
     
 def index_view(request):
     return render(request, 'readings/index.html')
 
 
-def draw_three_cards():
-    cards = random.sample(tarot_cards, 3)
-    for c in cards:
-        c["reversed"] = random.choice([True, False])
-    return cards
-
-def generate_ai_reading(cards):
-    summary = ", ".join(
-        [f"{c['name']} ({'reversed' if c['reversed'] else 'upright'})" for c in cards]
+@require_http_methods(["GET"])
+def api_draw(request):
+    """
+    Draw the initial 3 cards and generate AI reading.
+    Query param: ?type=love or ?type=general
+    Returns JSON: {cards: [...], reading: "...", reading_id: N}
+    """
+    reading_type = request.GET.get("type", "general")
+    cards = get_random_cards(3)
+    ai_text = generate_ai_reading(cards, reading_type=reading_type)
+    reading = Reading.objects.create(
+        user=request.user if request.user.is_authenticated else None,
+        reading_type=reading_type,
+        cards=cards,
+        ai_text=ai_text
     )
-    prompt = f"""
-    You are a mystical tarot reader.
-    Provide a poetic, insightful interpretation for these three tarot cards:
-    {summary}.
-    Explain them as past, present, and future in one short paragraph.
+    return JsonResponse({"cards": cards, "reading": ai_text, "reading_id": reading.id})
+
+
+@require_http_methods(["POST"])
+@login_required  # require login to add extras so we can track daily quota
+def api_add_extra(request):
+    """
+    Adds +3 cards to an existing reading. Expects JSON body {"reading_id": N}.
+    Enforces per-user daily quota: non-premium users can add extras max 2 times/day.
     """
     try:
-        resp = requests.post(
-            "http://localhost:11434/api/generate",
-            json={"model": "llama3", "prompt": prompt, "stream": False},
-            timeout=60
-        )
-        if resp.status_code == 200:
-            return resp.json().get("response", "").strip()
-        return f"Ollama error {resp.status_code}"
-    except Exception as e:
-        return f"Ollama not reachable: {e}"
-    
-def index(request):
-    return render(request, 'index.html')
+        payload = json.loads(request.body.decode("utf-8") or "{}")
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("invalid JSON")
 
-def api_draw(request):
-    cards = draw_three_cards()
-    ai_reading = generate_ai_reading(cards)
-    return JsonResponse({'cards': cards, 'reading': ai_reading})
+    reading_id = payload.get("reading_id")
+    if not reading_id:
+        return HttpResponseBadRequest("missing reading_id")
+
+    reading = get_object_or_404(Reading, pk=reading_id)
+
+    # only owner can modify their reading
+    if reading.user and reading.user != request.user:
+        return JsonResponse({"error": "not_owner"}, status=403)
+
+    profile = request.user.profile
+    profile.reset_if_needed()
+
+    if not profile.is_premium and profile.daily_extra_uses >= 2:
+        return JsonResponse({"error": "daily_limit_reached"}, status=403)
+
+    existing_names = {c["name"] for c in reading.cards}
+    new_cards = get_random_cards(3, exclude_names=existing_names)
+    reading.cards.extend(new_cards)
+    reading.extra_adds += 1
+    reading.ai_text = generate_ai_reading(reading.cards, reading_type=reading.reading_type)
+    reading.save()
+
+    if not profile.is_premium:
+        profile.daily_extra_uses += 1
+        profile.save()
+
+    return JsonResponse({"cards": reading.cards, "reading": reading.ai_text, "extra_adds": reading.extra_adds})
+
+
+@require_http_methods(["GET"])
+def api_card_of_day(request):
+    """
+    Return deterministic 'card of the day' for the user (or anon).
+    No AI call — uses prewritten meanings.
+    """
+    cod = deterministic_card_of_day(request.user if request.user.is_authenticated else None)
+    if not cod:
+        return JsonResponse({"error": "no_cards_loaded"}, status=500)
+    return JsonResponse({"card": cod})
