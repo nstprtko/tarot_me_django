@@ -8,47 +8,32 @@
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"
     >
   </head>
+  
 
-  <body>
-        <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-        <div class="d-flex justify-content-center">
-          <a class="navbar-brand" href="#"> TarotMe
-          </a>
-        
-        
-
-        <div clas="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                 <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-        
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-                </a>
-              <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-            </li>
-        
-          </div> </nav>
-
-          
-          
+  <body style="background: #b595c9">
+     
+        <nav class="navbar navbar-expand-lg" style="background: #b595c9">
       
-        <div class="container"> 
-        <div container="container">main
-            <div class="col-6">
-              divding the column into two parts
-              <div class="row"> how do we put it left</div>
-              <div class="row"> how do we put it left</div>
-              <div class="col">how do we put it right</div>
-            </div>
+          <div class="container-fluid me-4 ms-4">
+            <a class="navbar-brand" href="#">
+              <img src={% static "images/review.png" %} alt="Profile" width="30" height="30" class="d-inline-block">
+            </a>
+            <a class="navbar-brand w-100 text-center" href="#">
+              <span class="fs-4 fw-bold"> Tarot Me </span>
+              <img src={% static "images/animal.png" %} alt="Icon" width="30" height="30" class="d-inline-block">
+            </a>
+          </div>
+        </nav>
+    
+        <div class="container-fluid min-vh-100"> main
+        <div container="container">
+            <div class="row min-vh-100">
+              <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-5">
+                <div class="w-100">left</div>
+              </div>
+              <div class="col-md-6 d-flex justify-content-center align-items-center">
+                right
+              </div>
         </div>
     </div>
     
