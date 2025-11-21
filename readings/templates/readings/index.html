@@ -1,40 +1,59 @@
-
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tarot Me - Card of the Day</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- font -->
-     <style>
-        
-        :root {
-            --tarot-dark-bg: #4c4a63; 
-            --tarot-card-bg: rgba(0, 0, 0, 0.25); 
-            --tarot-button-bg: #6a668a; 
-            --tarot-text-light: #C9BFBD; 
-            --bg-image-url: url("{%  static 'images/background_cards.png' %}"); 
-        }
-
-        
-        body {
-            background-color: var(--tarot-dark-bg);
-            color: var(--tarot-text-light);
-            min-height: 100vh; /* Ensure the body takes full viewport height */
-            font-family: 'Inter', sans-serif;
-            
-            
-            background-image: var(--bg-image-url);
-            background-size: cover; 
-            background-attachment: fixed; 
-            background-repeat: no-repeat; 
-        }
-    </style>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"
+    >
   </head>
-  <body class='p-3'>
-    <h1>Tarot Me </h1>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  <body>
+        <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+          <a class="navbar-brand" href="#"> TarotMe
+          </a>
+        
+        
+
+        <div clas="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                 <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+        
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+                </a>
+              <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+            </li>
+        
+          </div> </nav>
+
+          
+          
+      
+        <div class="container"> 
+        <div container="container">main
+            <div class="col-6">
+              divding the column into two parts
+              <div class="row"> how do we put it left</div>
+              <div class="row"> how do we put it left</div>
+              <div class="col">how do we put it right</div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src={% static 'js/bootstrap.js' %}></script>
   </body>
+  
 </html>
