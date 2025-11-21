@@ -1,4 +1,4 @@
-# readings/management/commands/load_cards.py
+
 import json
 from django.core.management.base import BaseCommand
 from pathlib import Path
