@@ -5,106 +5,53 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tarot Me - Card of the Day</title>
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"
+    >
   </head>
   
-  <body style="margin: 0; padding: 0; font-family: Georgia, serif;">
-    
-    <!-- Background Layer -->
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                background: url('{% static 'images/tarot-background.png' %}') center/cover no-repeat; 
-                background-color: #6b7b9e; z-index: -2;"></div>
-    
-    <!-- Overlay Layer -->
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+
+  <body style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: url('{% static "images/background_cards.png" %}') center/cover no-repeat;
+                background-color: #b595c9; z-index: -2;"></div>
+    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                 background: rgba(107, 123, 158, 0.3); z-index: -1;"></div>
-    
-    <!-- Navbar -->
+     
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid mx-4">
-        
-        <!-- Left: Profile -->
-        <a class="navbar-brand text-white" href="#">
-          <img src="{% static 'images/review.png' %}" 
-               alt="Profile" 
-               width="30" 
-               height="30" 
-               class="d-inline-block me-2"
-               style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));">
-          <div class="d-inline-block" style="line-height: 1.2;">
-            <div style="font-size: 0.9rem;">My Profile</div>
-            <div style="font-size: 0.75rem; opacity: 0.8;">See Details</div>
-          </div>
-        </a>
-        
-        <!-- Center: Title -->
+
+            <a class="navbar-brand text-white" href="#">
+              <img src={% static "images/review.png" %} 
+              alt="Profile" 
+              width="30" 
+              height="30" 
+              class="d-inline-block me-2">
+            
+              <div class="d-inline-block" style="line-height: 1.2;">
+                <div style="font-size: 0.9rem;">My Profile</div>
+                <div style="font-size: 0.75rem; opacity: 0.8;">See Details</div>
+              </div>
+            </a>
         <div class="position-absolute start-50 translate-middle-x">
-          <span class="text-white fs-3" style="letter-spacing: 2px;">TarotMe</span>
-        </div>
-        
-        <!-- Right: Cat Icon -->
-        <a class="navbar-brand ms-auto" href="#">
-          <img src="{% static 'images/animal.png' %}" 
-               alt="Cat" 
-               width="50" 
-               height="50"
-               style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));">
-        </a>
-        
+          <span class="text-white fs-3" style="letter-spacing: 2px;"> Tarot Me </span>
+          <img src={% static "images/animal.png" %} alt="Icon Cat" width="40" height="40" class="d-inline-block" style="filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));"></div>
       </div>
     </nav>
     
-    <!-- Main Container -->
-    <div class="container-fluid min-vh-100 d-flex align-items-center">
-      <div class="container">
-        <div class="row align-items-center">
-          
-          <!-- Left Column -->
-          <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-5">
-            
-            <!-- Card Info Box -->
-            <div class="text-white p-5 mb-4" 
-                 style="background: rgba(139, 127, 141, 0.7); 
-                        backdrop-filter: blur(10px); 
-                        border-radius: 20px; 
-                        max-width: 500px;
-                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
-              <h2 class="mb-4" style="font-size: 2rem; font-weight: 300;">
-                Your card of the day is...
-              </h2>
-              <div class="text-center mt-5">
-                <p class="mb-1" style="font-size: 1.1rem;">blah blah blah</p>
-                <p style="font-size: 1.1rem;">explanation</p>
+        <div class="container-fluid min-vh-100">
+        <div container="container">
+            <div class="row min-vh-100">
+              <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-5">
+                <div class="w-100">left</div>
               </div>
-            </div>
-            
-            <!-- Expand Button -->
-            <button class="btn text-white px-5 py-3" 
-                    style="background: rgba(139, 127, 141, 0.7); 
-                           backdrop-filter: blur(10px); 
-                           border-radius: 15px; 
-                           font-size: 1.2rem;
-                           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);">
-              Expand the reading
-            </button>
-            
-          </div>
-          
-          <!-- Right Column -->
-          <div class="col-md-6 d-flex justify-content-center align-items-center p-5">
-            <img src="{% static 'images/the-world-card.jpg' %}" 
-                 alt="The World Tarot Card" 
-                 class="img-fluid"
-                 style="max-width: 400px; 
-                        border: 8px solid #4a9fd8; 
-                        border-radius: 10px; 
-                        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);">
-          </div>
-          
+              <div class="col-md-6 d-flex justify-content-center align-items-center">
+                right
+              </div>
         </div>
-      </div>
     </div>
     
-    <script src="{% static 'js/bootstrap.js' %}"></script>
+    
+    <script src={% static 'js/bootstrap.js' %}></script>
   </body>
+  
 </html>
