@@ -41,7 +41,7 @@
     <div class="container-fluid min-vh-100 d-flex align-items-center">
       <div class="container mt-0">
           <div class="row min-vh-100 align-items-center">
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-5">
+            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-9">
                 <div class="p-5 mb-4"
                 style="background: #7B6E70;
                 border-radius: 20px;
@@ -67,7 +67,7 @@
               </button>
             </div>
             
-            <div class="col-md-6 d-flex justify-content-center align-items-center p-5">
+            <div class="col-md-6 d-flex justify-content-center align-items-center p-7">
               <img src="{% static "cards/14-Temperance.jpg" %}"
                   alt="temperance card"
                   class="img-fluid"
@@ -76,6 +76,36 @@
                         border-radius: 10px;
                         backdrop-filter: blur;
                         box-shadow: 0 8px 10px #5e5c61;">
+                        <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/card_of_day/')
+            .then(response => response.json())
+            .then(data => {
+                const card = data.card;
+                const cardName = card.name;
+                const explanation = card.is_reversed ? card.reversed : card.upright;
+                
+                // Update the Title
+                document.getElementById('card-title').textContent = 
+                    `Your card of the day is: ${cardName}`;
+
+                // Update the Explanation
+                document.getElementById('card-upright-text').textContent = explanation.split('.')[0] + '.';
+                document.getElementById('card-explanation').textContent = explanation.split('.')[1] || '';
+
+                // Update the Image
+                const imagePath = `{% static "cards/" %}${card.image}`;
+                const cardImage = document.getElementById('card-image');
+                cardImage.src = imagePath;
+                cardImage.alt = `${cardName} card`;
+
+            })
+            .catch(error => {
+                console.error('Error fetching card of the day:', error);
+                document.getElementById('card-title').textContent = "Error loading card.";
+            });
+    });
+</script>
             </div>
           </div>
         </div>
