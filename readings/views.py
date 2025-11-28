@@ -8,9 +8,29 @@ import random
 import json
 import requests
 from pathlib import Path
+from django.views.generic import TemplateView 
+from random import choice
+from .models import Card
+
+class IndexView(TemplateView):
+    template_name= 'readings/index.html'
+
+class RandomCardView(TemplateView):
+    template_name= 'readings/random_card.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pks = Card.objects.values_list('pk', flat=True)
+        random_pk = choice(pks)
+        random_obj = Card.objects.get(pk=random_pk)
+        context['card'] = random_obj
+        return context
     
-def index_view(request):
-    return render(request, 'readings/index.html')
+    
+        
+    
+    
+class LoveReadingView(TemplateView):
+    template_name= 'readings/love_reading.html'
 
 
 @require_http_methods(["GET"])
@@ -84,3 +104,5 @@ def api_card_of_day(request):
     if not cod:
         return JsonResponse({"error": "no_cards_loaded"}, status=500)
     return JsonResponse({"card": cod})
+
+
