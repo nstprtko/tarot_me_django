@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tarot Me - Card of the Day</title>
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"
-    >
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
   </head>
   
 
@@ -49,12 +49,7 @@
                 box-shadow: 0 2px 4px #665b5dff;
                 color: #C7BDBC;">
                 <h2 class="mb-4" style="font-size: 2rem; font-weight: 300;">
-                  Your card of the day is {{card.name}} 
-                  
-                  s{{card.upright}} 
-                  f{{card.reversed}} 
-                  d{{card.image}} 
-                  g{{card.slug}}
+                  Your card of the day is {{card.name}}
                 </h2>
                 <div class="text-center mt-5">
                   <p class="mb-1" style="font-size: 1.1rem;"> blah blah blah </p>
@@ -62,15 +57,20 @@
                 </div>
               </div>
               
-              <a href="{% url 'readings:randomcard' %}"
+              <button hx-post ="{% url 'readings:randomcard' %}"
+                      hx-target="#reading-result"
+                      hx-indicator="#loading"
                       class="btn px-5 py-3"
                       style="background: #7B6E70;
                       border-radius: 15px;
                       font-size: 1.2rem;
                       box-shadow: 0 2px 4px #665b5dff;
-                      color: #C7BDBC;">
+                      color: #C7BDBC;"
+                      >
               Expand the reading
-              </a>
+            </button>
+            <div id="loading" class="htmx-indicator">Consulting the cards...</div>
+            <div id="reading-result"></div>
             </div>
             
             <div class="col-md-6 d-flex justify-content-center align-items-center p-7">
@@ -82,7 +82,7 @@
                         border-radius: 10px;
                         backdrop-filter: blur;
                         box-shadow: 0 8px 10px #5e5c61;">
-                        <script>
+                        
     
             </div>
           </div>

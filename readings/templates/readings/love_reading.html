@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tarot Me - Card of the Day</title>
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"
-    >
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
   </head>
   
 
@@ -49,7 +49,9 @@
                 box-shadow: 0 2px 4px #665b5dff;
                 color: #C7BDBC;">
                 <h2 class="mb-4" style="font-size: 2rem; font-weight: 300;">
-                   Your Love Reading
+                  What concerns love ... {% for card in cards %}
+                                          {{ card.name }}
+                                          {% endfor %}
                 </h2>
                 <div class="text-center mt-5">
                   <p class="mb-1" style="font-size: 1.1rem;"> blah blah blah </p>
@@ -57,57 +59,58 @@
                 </div>
               </div>
               
-              <a href="{% url 'readings:randomcard' %}"
+              <button hx-post ="{% url 'readings:randomcard' %}"
+                      hx-target="#reading-result"
+                      hx-indicator="#loading"
                       class="btn px-5 py-3"
                       style="background: #7B6E70;
                       border-radius: 15px;
                       font-size: 1.2rem;
                       box-shadow: 0 2px 4px #665b5dff;
-                      color: #C7BDBC;">
+                      color: #C7BDBC;"
+                      >
               Expand the reading
-              </a>
+            </button>
+            <div id="loading" class="htmx-indicator">Consulting the cards...</div>
+            <div id="reading-result"></div>
             </div>
             
             <div class="col-md-6 d-flex justify-content-center align-items-center p-7">
-              <img src="{% static "cards/06-TheLovers.jpg" %}"
-                  alt="temperance card"
-                  class="img-fluid"
-                  style="max-width: 400px;
-                        border: 4px solid #746e6eff;
-                        border-radius: 10px;
-                        backdrop-filter: blur;
-                        box-shadow: 0 8px 10px #5e5c61;">
-                        <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('/api/card_of_day/')
-            .then(response => response.json())
-            .then(data => {
-                const card = data.card;
-                const cardName = card.name;
-                const explanation = card.is_reversed ? card.reversed : card.upright;
-                
-                // Update the Title
-                document.getElementById('card-title').textContent = 
-                    `Your card of the day is: ${cardName}`;
-
-                // Update the Explanation
-                document.getElementById('card-upright-text').textContent = explanation.split('.')[0] + '.';
-                document.getElementById('card-explanation').textContent = explanation.split('.')[1] || '';
-
-                // Update the Image
-                const imagePath = `{% static "cards/" %}${card.image}`;
-                const cardImage = document.getElementById('card-image');
-                cardImage.src = imagePath;
-                cardImage.alt = `${cardName} card`;
-
-            })
-            .catch(error => {
-                console.error('Error fetching card of the day:', error);
-                document.getElementById('card-title').textContent = "Error loading card.";
-            });
-    });
-</script>
+              {% for card in cards %}
+              <div class="col-md-6 d-flex justify-content-left align-items-center">
+                <img src="{% static "cards/"%}{{card.image}}"
+                    alt="{{card.name}}"
+                    class="img-fluid"
+                    style="max-width: 400px;
+                          border: 4px solid #746e6eff;
+                          border-radius: 10px;
+                          backdrop-filter: blur;
+                          box-shadow: 0 8px 10px #5e5c61;">
+                </div>
+                <div class="col-md-6 d-flex justify-content-left align-items-center">
+                <img src="{% static "cards/"%}{{card.image}}"
+                    alt="{{card.name}}"
+                    class="img-fluid"
+                    style="max-width: 400px;
+                          border: 4px solid #746e6eff;
+                          border-radius: 10px;
+                          backdrop-filter: blur;
+                          box-shadow: 0 8px 10px #5e5c61;">
+                </div>
+                <div class="col-md-6 d-flex justify-content-right align-items-center">
+                <img src="{% static "cards/"%}{{card.image}}"
+                    alt="{{card.name}}"
+                    class="img-fluid"
+                    style="max-width: 400px;
+                          border: 4px solid #746e6eff;
+                          border-radius: 10px;
+                          backdrop-filter: blur;
+                          box-shadow: 0 8px 10px #5e5c61;">
+                </div>
+                {% endfor %}
             </div>
+
+            
           </div>
         </div>
       </div>

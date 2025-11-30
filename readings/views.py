@@ -9,7 +9,7 @@ import json
 import requests
 from pathlib import Path
 from django.views.generic import TemplateView 
-from random import choice
+from random import choice, sample
 from .models import Card
 
 class IndexView(TemplateView):
@@ -31,7 +31,13 @@ class RandomCardView(TemplateView):
     
 class LoveReadingView(TemplateView):
     template_name= 'readings/love_reading.html'
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pks = list(Card.objects.values_list('pk', flat=True))
+        random_pks = sample(pks, 3)
+        random_objs = Card.objects.filter(pk__in=random_pks)
+        context['cards'] = random_objs
+        return context
 
 @require_http_methods(["GET"])
 def api_draw(request):
