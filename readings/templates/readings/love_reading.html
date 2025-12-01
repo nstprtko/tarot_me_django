@@ -39,7 +39,7 @@
     </nav>
     
     <div class="container-fluid min-vh-100 d-flex align-items-center">
-      <div class="container mt-0">
+      <div class="container mt-0"> 
           <div class="row min-vh-100 align-items-center">
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-9">
                 <div class="p-5 mb-4"
@@ -75,9 +75,9 @@
             <div id="reading-result"></div>
             </div>
             
-            <div class="col-md-6 d-flex justify-content-center align-items-center p-7">
-              {% for card in cards %}
-              <div class="col-md-6 d-flex justify-content-left align-items-center">
+            <div class="col-sm-6 d-flex justify-content-center align-items-center ">
+              <div class="col-sm-2 d-flex justify-content-left align-items-center ">
+                {% for card in cards %}
                 <img src="{% static "cards/"%}{{card.image}}"
                     alt="{{card.name}}"
                     class="img-fluid"
@@ -86,30 +86,33 @@
                           border-radius: 10px;
                           backdrop-filter: blur;
                           box-shadow: 0 8px 10px #5e5c61;">
-                </div>
-                <div class="col-md-6 d-flex justify-content-left align-items-center">
-                <img src="{% static "cards/"%}{{card.image}}"
-                    alt="{{card.name}}"
-                    class="img-fluid"
-                    style="max-width: 400px;
-                          border: 4px solid #746e6eff;
-                          border-radius: 10px;
-                          backdrop-filter: blur;
-                          box-shadow: 0 8px 10px #5e5c61;">
-                </div>
-                <div class="col-md-6 d-flex justify-content-right align-items-center">
-                <img src="{% static "cards/"%}{{card.image}}"
-                    alt="{{card.name}}"
-                    class="img-fluid"
-                    style="max-width: 400px;
-                          border: 4px solid #746e6eff;
-                          border-radius: 10px;
-                          backdrop-filter: blur;
-                          box-shadow: 0 8px 10px #5e5c61;">
-                </div>
                 {% endfor %}
+                </div>
+                
+                <div class="col-sm-2 d-flex justify-content-left align-items-center ">
+                <img src="{% static "cards/"%}{{card.image}}"
+                    alt="{{card.name}}"
+                    class="img-fluid"
+                    style="max-width: 400px;
+                          border: 4px solid #746e6eff;
+                          border-radius: 10px;
+                          backdrop-filter: blur;
+                          box-shadow: 0 8px 10px #5e5c61;"
+                    >
+                </div>
+                <div class="col-sm-2 d-flex justify-content-right align-items-center ">
+                <img src="{% static "cards/"%}{{card.image}}"
+                    alt="{{card.name}}"
+                    class="img-fluid"
+                    style="max-width: 400px;
+                          border: 4px solid #746e6eff;
+                          border-radius: 10px;
+                          backdrop-filter: blur;
+                          box-shadow: 0 8px 10px #5e5c61;">
+                </div>
+                
             </div>
-
+            
             
           </div>
         </div>
