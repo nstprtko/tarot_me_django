@@ -38,6 +38,16 @@ class LoveReadingView(TemplateView):
         random_objs = Card.objects.filter(pk__in=random_pks)
         context['cards'] = random_objs
         return context
+    
+class ExpandedReadingView(TemplateView):
+    template_name= 'readings/reading.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pks = list(Card.objects.values_list('pk', flat=True))
+        random_pks = sample(pks, 3)
+        random_objs = Card.objects.filter(pk__in=random_pks)
+        context['cards'] = random_objs
+        return context
 
 @require_http_methods(["GET"])
 def api_draw(request):
