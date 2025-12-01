@@ -1,4 +1,5 @@
-{% load static %}
+{% load django_htmx static%}
+{% if not request.htmx %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,11 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tarot Me - Card of the Day</title>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"
+    {% htmx_script %}
     >
   </head>
   
 
-  <body style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
+  <body hx-headers='{"x-csrftoken": "{{ csrf_token}}"}'
+  style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
     <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                 background: url('{% static "images/background_cards.png" %}') center/cover no-repeat; opacity: 80%;
                 background-color: #625b71; z-index: -2;"></div>
@@ -39,82 +42,20 @@
     </nav>
     
     <div class="container-fluid min-vh-100 d-flex align-items-center">
-      <div class="container mt-0">
-          <div class="row min-vh-100 align-items-center">
-            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-9">
-                <div class="p-5 mb-4"
-                style="background: #7B6E70;
-                border-radius: 20px;
-                max-width: 500px;
-                box-shadow: 0 2px 4px #665b5dff;
-                color: #C7BDBC;">
-                <h2 class="mb-4" style="font-size: 2rem; font-weight: 300;">
-                  Your card of the day is ...
-                </h2>
-                <div class="text-center mt-5">
-                  <p class="mb-1" style="font-size: 1.1rem;"> blah blah blah </p>
-                  <p style="font-size: 1.1rem;"> explanation</p>
-                </div>
-              </div>
-              
-              <a href="{% url 'readings:randomcard' %}"
-                      class="btn px-5 py-3"
-                      style="background: #7B6E70;
-                      border-radius: 15px;
-                      font-size: 1.2rem;
-                      box-shadow: 0 2px 4px #665b5dff;
-                      color: #C7BDBC;">
-              Expand the reading
-              </a>
-            </div>
-            
-            <div class="col-md-6 d-flex justify-content-center align-items-center p-7">
-              <img src="{% static "cards/14-Temperance.jpg" %}"
-                  alt="temperance card"
-                  class="img-fluid"
-                  style="max-width: 400px;
-                        border: 4px solid #746e6eff;
-                        border-radius: 10px;
-                        backdrop-filter: blur;
-                        box-shadow: 0 8px 10px #5e5c61;">
-                        <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('/api/card_of_day/')
-            .then(response => response.json())
-            .then(data => {
-                const card = data.card;
-                const cardName = card.name;
-                const explanation = card.is_reversed ? card.reversed : card.upright;
-                
-                // Update the Title
-                document.getElementById('card-title').textContent = 
-                    `Your card of the day is: ${cardName}`;
+      {% endif%}
 
-                // Update the Explanation
-                document.getElementById('card-upright-text').textContent = explanation.split('.')[0] + '.';
-                document.getElementById('card-explanation').textContent = explanation.split('.')[1] || '';
+     {% block content %}
+              {% endblock content %}
 
-                // Update the Image
-                const imagePath = `{% static "cards/" %}${card.image}`;
-                const cardImage = document.getElementById('card-image');
-                cardImage.src = imagePath;
-                cardImage.alt = `${cardName} card`;
+      {% if not request.htmx %}
 
-            })
-            .catch(error => {
-                console.error('Error fetching card of the day:', error);
-                document.getElementById('card-title').textContent = "Error loading card.";
-            });
-    });
-</script>
-            </div>
-          </div>
-        </div>
+      {% endif%}
       </div>
 
       
     
     <script src={% static 'js/bootstrap.js' %}></script>
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+  
   
 </html>

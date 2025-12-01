@@ -1,44 +1,10 @@
+{% extends "readings/index.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tarot Me - Card of the Day</title>
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
-  </head>
+
+
+
   
-
-  <body style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: url('{% static "images/background_cards.png" %}') center/cover no-repeat; opacity: 80%;
-                background-color: #625b71; z-index: -2;"></div>
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background:  rgba(98, 91, 113, 0.7); z-index: -1;"></div>
-     
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid mx-4">
-
-            <a class="navbar-brand d-flex align-items-center" href="#">
-              <img src={% static "images/web.png" %} 
-              alt="Profile" 
-              width="30" 
-              height="30" 
-              class="d-inline-block me-2">
-            
-              <div style="line-height: 1.2;">
-                <div style="font-size: 0.9rem; color: #C7BDBC">My Profile</div>
-                <div style="font-size: 0.75rem; color: #C7BDBC; opacity: 0.8;">See Details</div>
-              </div>
-            </a>
-        <div class="position-absolute start-50 translate-middle-x d-flex align-items-center">
-          <span class="fs-2" style="letter-spacing: 2px; color: #C7BDBC"> TarotMe </span>
-          <img src={% static "images/animal.png" %} alt="Icon Cat" width="40" height="40" class="d-inline-block" style="filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));"></div>
-      </div>
-    </nav>
-    
-    <div class="container-fluid min-vh-100 d-flex align-items-center">
+    {% block content %}
       <div class="container mt-0">
           <div class="row min-vh-100 align-items-center">
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-9">
@@ -57,7 +23,7 @@
                 </div>
               </div>
               
-              <button hx-post ="{% url 'readings:randomcard' %}"
+              <button hx-get ="{% url 'readings:randomcard' %}"
                       hx-target="#reading-result"
                       hx-indicator="#loading"
                       class="btn px-5 py-3"
@@ -88,10 +54,10 @@
           </div>
         </div>
       </div>
-
+    {% endblock content %}
       
+
     
-    <script src={% static 'js/bootstrap.js' %}></script>
-  </body>
   
-</html>
+
+  

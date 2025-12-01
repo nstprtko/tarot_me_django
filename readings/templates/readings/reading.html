@@ -1,43 +1,10 @@
+{% extends "readings/index.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tarot Me - Card of the Day</title>
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet"
-    >
-  </head>
+
   
 
-  <body style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: url('{% static "images/background_cards.png" %}') center/cover no-repeat; opacity: 80%;
-                background-color: #625b71; z-index: -2;"></div>
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background:  rgba(98, 91, 113, 0.7); z-index: -1;"></div>
-     
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid mx-4">
-
-            <a class="navbar-brand d-flex align-items-center" href="#">
-              <img src={% static "images/web.png" %} 
-              alt="Profile" 
-              width="30" 
-              height="30" 
-              class="d-inline-block me-2">
-            
-              <div style="line-height: 1.2;">
-                <div style="font-size: 0.9rem; color: #C7BDBC">My Profile</div>
-                <div style="font-size: 0.75rem; color: #C7BDBC; opacity: 0.8;">See Details</div>
-              </div>
-            </a>
-        <div class="position-absolute start-50 translate-middle-x d-flex align-items-center">
-          <span class="fs-2" style="letter-spacing: 2px; color: #C7BDBC"> TarotMe </span>
-          <img src={% static "images/animal.png" %} alt="Icon Cat" width="40" height="40" class="d-inline-block" style="filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));"></div>
-      </div>
-    </nav>
-    
+  
+   {% block content %} 
     <div class="container-fluid min-vh-100 d-flex align-items-center">
       <div class="container mt-0">
           <div class="row min-vh-100 align-items-center">
@@ -57,15 +24,18 @@
                 </div>
               </div>
               
-              <a href="{% url 'readings:randomcard' %}"
+              <button hx-get ="{% url 'readings:randomcard' %}"
+                      hx-target="#reading-result"
+                      hx-indicator="#loading"
                       class="btn px-5 py-3"
                       style="background: #7B6E70;
                       border-radius: 15px;
                       font-size: 1.2rem;
                       box-shadow: 0 2px 4px #665b5dff;
-                      color: #C7BDBC;">
+                      color: #C7BDBC;"
+                      >
               Expand the reading
-              </a>
+            </button>
             </div>
             
             <div class="col-md-6 d-flex justify-content-center align-items-center p-7">
@@ -78,43 +48,12 @@
                         backdrop-filter: blur;
                         box-shadow: 0 8px 10px #5e5c61;">
                         <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('/api/card_of_day/')
-            .then(response => response.json())
-            .then(data => {
-                const card = data.card;
-                const cardName = card.name;
-                const explanation = card.is_reversed ? card.reversed : card.upright;
-                
-                // Update the Title
-                document.getElementById('card-title').textContent = 
-                    `Your card of the day is: ${cardName}`;
-
-                // Update the Explanation
-                document.getElementById('card-upright-text').textContent = explanation.split('.')[0] + '.';
-                document.getElementById('card-explanation').textContent = explanation.split('.')[1] || '';
-
-                // Update the Image
-                const imagePath = `{% static "cards/" %}${card.image}`;
-                const cardImage = document.getElementById('card-image');
-                cardImage.src = imagePath;
-                cardImage.alt = `${cardName} card`;
-
-            })
-            .catch(error => {
-                console.error('Error fetching card of the day:', error);
-                document.getElementById('card-title').textContent = "Error loading card.";
-            });
-    });
-</script>
+    
             </div>
           </div>
         </div>
       </div>
-
+      {% endblock content %}
       
     
-    <script src={% static 'js/bootstrap.js' %}></script>
-  </body>
-  
-</html>
+    
