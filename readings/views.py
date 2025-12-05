@@ -28,7 +28,8 @@ class RandomCardView(TemplateView):
     
 # card of the day explanation, expanded readings, love readings explanation   
 class ReadingService:
-       INSTRUCTION = " "
+       HOST = settings.OLLAMA_HOST
+       INSTRUCTION = "You are a mystical tarot reader. Interpret the cards as past, present, future"
        MESSAGE = """
        MyMessage [MY NAME],
        """
@@ -42,16 +43,18 @@ class ReadingService:
 
            client = OpenAI(
                #This is the default and can be comitted
-               api_key = os.environ.get("OPENAI_API_KEY"),
+               base_url = 'http://localhost:11434/v1',
+               api_key = 'ollama',
            )
 
            response = client.responses.create(
-               model="gpt-4o",
+               model="llama2",
                instruction = self.INSTRUCTION,
                input=self.get_message(data),
            )
 
            print(response.output_text)
+           
 
 class CardOfTheDayService(ReadingService):
     pass
