@@ -26,8 +26,43 @@ class RandomCardView(TemplateView):
         return context
     
     
-        
-    
+# card of the day explanation, expanded readings, love readings explanation   
+class ReadingService:
+       INSTRUCTION = " "
+       MESSAGE = """
+       MyMessage [MY NAME],
+       """
+       def get_message(data):
+           return    self.MESSAGE.format(data)
+       
+       def ask_for_readings(data: dict):
+        # ???? переставити на початок коду в імпорти
+           import os
+           from openai import OpenAI
+
+           client = OpenAI(
+               #This is the default and can be comitted
+               api_key = os.environ.get("OPENAI_API_KEY"),
+           )
+
+           response = client.responses.create(
+               model="gpt-4o",
+               instruction = self.INSTRUCTION,
+               input=self.get_message(data),
+           )
+
+           print(response.output_text)
+
+class CardOfTheDayService(ReadingService):
+    pass
+
+class ExpandedReadings(ReadingService):
+    pass
+
+class LoveReadingService(ReadingService):
+    INSTRUCTION = "Xv"
+
+
     
 class LoveReadingView(TemplateView):
     template_name= 'readings/love_reading.html'
