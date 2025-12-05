@@ -86,6 +86,12 @@ class ExpandedReadingView(TemplateView):
         random_objs = Card.objects.filter(pk__in=random_pks)
         context['cards'] = random_objs
         return context
+    
+    
+
+    
+    
+    
 
 @require_http_methods(["GET"])
 def api_draw(request):
