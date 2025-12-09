@@ -109,8 +109,12 @@ class RandomCardView(TemplateView):
         pks = Card.objects.values_list('pk', flat=True)
         random_pk = choice(pks)
         random_obj = Card.objects.get(pk=random_pk)
+        card_of_the_day=CardOfTheDayService()
+        meaning = card_of_the_day.generate_interpretation(random_obj.card_name, random_obj.card_meaning)
         context['card'] = random_obj
-        return context
+        return context, meaning
+    
+    
       
 class LoveReadingView(TemplateView):
     template_name= 'readings/love_reading.html'
