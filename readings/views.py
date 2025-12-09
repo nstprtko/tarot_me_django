@@ -33,7 +33,7 @@ class ReadingService:
     def format_message(self, card_name, card_meaning):
         return f"""Card of the day: {card_name},
                 Meaning : {card_meaning}
-                Provide a whimsical, inspiring interpretation for today's guidance. Maximum 3 sentences"""
+                Provide a whimsical, inspiring interpretation of guidance. Maximum 3 sentences"""
                 
                 
     def generate_interpretation(self, card_name, card_meaning):
@@ -59,43 +59,33 @@ class ReadingService:
         # message.content - the actual message 
         # strip ;) is actully not nessesary 
         
+    def generate_reading_multuple(self, cards):
+        positions =["Past","Present","Future"]
+        message = ""
+        for i, card in enumerate(cards):
+            message += f"Interpret in maximum 3 sentences: {positions[i]}: {card.name} - {card.upright}\n"
+        
+        response = self.client.chat.completions.create(
+            model=self.MODEL,
+            messages=[
+                {"role": "system", "content":self.INSTRUCTION},
+                {"role": "user", "content": message}
+                ]
+        )
+        return response.choices[0].message.content.strip()
         
         
-        
-        
-       
-       
-       #def get_message(data):
-           #return    self.MESSAGE.format(data)
-       # what is the point of this function...
-       #def ask_for_readings(data: dict):
-        # ???? переставити на початок коду в імпорти
-           #import os
-           #from openai import OpenAI
-
-           #client = OpenAI(
-               #This is the default and can be comitted
-               #base_url = 'http://localhost:11434/v1',
-               #api_key = 'ollama',
-           #)
-
-           #response = client.responses.create(
-               #model="llama2",
-               #instruction = self.INSTRUCTION,
-               #input=self.get_message(data),
-           #)
-
-           #print(response.output_text)
+    
            
 
 class CardOfTheDayService(ReadingService):
     INSTRUCTION="You are a mystical, whimsical tarot reader. Provide brief, inspiring daily guidance."
 
-class ExpandedReadings(ReadingService):
-    pass
+class ExpandedReadingService(ReadingService):
+    INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about persons life and prospects. Use only 3 sentences"
 
 class LoveReadingService(ReadingService):
-    pass
+     INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about love and the person that comes to users life.Use only 3 sentences "
 
 
 class IndexView(TemplateView):
@@ -110,9 +100,10 @@ class RandomCardView(TemplateView):
         random_pk = choice(pks)
         random_obj = Card.objects.get(pk=random_pk)
         card_of_the_day=CardOfTheDayService()
-        meaning = card_of_the_day.generate_interpretation(random_obj.card_name, random_obj.card_meaning)
+        meaning = card_of_the_day.generate_interpretation(random_obj.name, random_obj.upright)
         context['card'] = random_obj
-        return context, meaning
+        context['meaning'] = meaning
+        return context
     
     
       
@@ -122,8 +113,11 @@ class LoveReadingView(TemplateView):
         context = super().get_context_data(**kwargs)
         pks = list(Card.objects.values_list('pk', flat=True))
         random_pks = sample(pks, 3)
-        random_objs = Card.objects.filter(pk__in=random_pks)
+        random_objs = list(Card.objects.filter(pk__in=random_pks))
+        love_reading=LoveReadingService()
+        meaning = love_reading.generate_reading_multuple(random_objs)
         context['cards'] = random_objs
+        context['meaning'] = meaning
         return context
     
 class ExpandedReadingView(TemplateView):
@@ -132,9 +126,13 @@ class ExpandedReadingView(TemplateView):
         context = super().get_context_data(**kwargs)
         pks = list(Card.objects.values_list('pk', flat=True))
         random_pks = sample(pks, 3)
-        random_objs = Card.objects.filter(pk__in=random_pks)
+        random_objs = list(Card.objects.filter(pk__in=random_pks))
+        expanded_reading=ExpandedReadingService()
+        meaning = expanded_reading.generate_reading_multuple(random_objs)
         context['cards'] = random_objs
+        context['meaning'] = meaning
         return context
+        
     
     
 
