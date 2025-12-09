@@ -136,7 +136,8 @@ class ExpandedReadingView(TemplateView):
         context['cards'] = random_objs
         return context
     
-    
+def policy_view(request):
+    return render(request, "readings/policy.html")
 
 @require_http_methods(["GET"])
 def api_draw(request):
