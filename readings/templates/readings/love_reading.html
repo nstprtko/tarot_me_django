@@ -28,6 +28,14 @@
                   <p style="font-size: 1.1rem;"> explanation</p>
                 </div>
               </div>
+              <form action="/card/" method="post">
+                {% for card in cards %}
+                  {{ card.name }}
+                  <input type="hidden" name="card" value="{{card.name}}">
+                  {% endfor %}
+                
+              </form>
+
               
               <button hx-get ="{% url 'readings:lovereading' %}"
                       hx-target="#reading-result"

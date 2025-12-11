@@ -16,6 +16,7 @@ import os
 from openai import OpenAI 
 
 
+
     
     
 # card of the day explanation, expanded readings, love readings explanation   
