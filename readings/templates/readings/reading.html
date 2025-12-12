@@ -7,7 +7,7 @@
   
     
     {% block content %}
-    <div id="main"
+    <div 
     class="container-fluid min-vh-100 d-flex align-items-center">
       <div class="container mt-0"> 
           <div class="row min-vh-100 align-items-center">
@@ -19,7 +19,7 @@
                 box-shadow: 0 2px 4px #665b5dff;
                 color: #C7BDBC;">
                 <h2 class="mb-4" style="font-size: 2rem; font-weight: 300;">
-                  lol ... {% for card in cards %}
+                   {% for card in cards %}
                                           {{ card.name }}
                                           {% endfor %}
                 </h2>
@@ -33,19 +33,38 @@
             
             </div>
             
-            <div class="col-sm-6 d-flex justify-content-center align-items-center ">
-              <div class="col-sm-2 d-flex justify-content-left align-items-center ">
-                {% for card in cards %}
-                <img src="{% static "cards/"%}{{card.image}}"
-                    alt="{{card.name}}"
-                    class="img-fluid"
-                    style="max-width: 400px;
-                          border: 4px solid #746e6eff;
-                          border-radius: 10px;
-                          backdrop-filter: blur;
-                          box-shadow: 0 8px 10px #5e5c61;">
-                {% endfor %}
+           <div class="col-md-6 d-flex justify-content-center align-items-center">
+              <div class="d-flex align-items-end gap-3" style="max-width: 600px;">
+    
+    
+                <div class="text-center">
+                  <img src="{% static "cards/ " %}{{card.0.image}}" 
+           alt="{{ cards.0.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 150px;">
+      
                 </div>
+    
+    <!-- Middle card (raised higher) -->
+    <div class="text-center" style="margin-bottom: 40px;">
+      <img src="{% static "cards/ " %}{{card.1.image}}" 
+           alt="{{ cards.1.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 180px;">
+      
+    </div>
+    
+   
+    <div class="text-center">
+      <img src="{% static "cards/"%}{{card.2.image}}" 
+           alt="{{ cards.2.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 150px;">
+      
+    </div>
+    
+  </div>
+</div>
                 
                 
                 

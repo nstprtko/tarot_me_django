@@ -40,11 +40,8 @@
           <img src={% static "images/animal.png" %} alt="Icon Cat" width="40" height="40" class="d-inline-block" style="filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));"></div>
       </div>
     </nav>
-    
-    <div id="main"
-    class="container-fluid min-vh-100 d-flex align-items-center">
-    
-      <button hx-get="{% url 'readings:randomcard' %}"
+    <div class="container-fluid d-flex justify-content-center gap-3 mt-4">
+    <button hx-get="{% url 'readings:randomcard' %}"
         hx-target="#main"
         hx-swap="innerHTML"
         hx-push-url="true"
@@ -68,21 +65,6 @@
         color: #C7BDBC;">
             Ask about love
       </button>
-      <a href="{% url 'readings:policy' %}"
-        class="position-fixed"
-        style="
-        bottom: 20px;
-        left: 20px;
-        background: #C7BDBC;
-        color: #4a4244;
-        padding: 10px 18px;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        text-decoration: none;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        z-index: 9999;">
-        Privacy Policy
-      </a>
 {% endif%}
 
      {% block content %}
@@ -91,7 +73,7 @@
       {% if not request.htmx %}
 
       {% endif%}
-      </div>
+</div>
 
       
     
