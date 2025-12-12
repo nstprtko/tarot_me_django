@@ -3,18 +3,18 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from .utils import generate_ai_reading, get_random_cards, deterministic_card_of_day
-from .models import Reading
+from ..utils import generate_ai_reading, get_random_cards, deterministic_card_of_day
+from ..models import Reading
 import random 
 import json
 import requests
 from pathlib import Path
 from django.views.generic import TemplateView 
 from random import choice, sample
-from .models import Card
+from ..models import Card
 import os
 from openai import OpenAI 
-
+from .homepage import HomePageView 
 
 
     
@@ -89,8 +89,7 @@ class LoveReadingService(ReadingService):
      INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about love and the person that comes to users life.Use only 3 sentences "
 
 
-class IndexView(TemplateView):
-    template_name= 'readings/index.html'
+
 
 class RandomCardView(TemplateView):
     template_name = 'readings/random_card.html'

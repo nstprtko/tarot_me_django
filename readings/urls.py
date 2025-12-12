@@ -1,11 +1,12 @@
 
 from django.urls import path
 from . import views
+from .views.homepage import HomePageView
 
 app_name = "readings"
 
 urlpatterns = [
-    path("", views.IndexView.as_view(), name="index"),
+    path("homepage", HomePageView.as_view(), name="homepage"),
     path("randomcard", views.RandomCardView.as_view(), name="randomcard"),
     path("lovereading", views.LoveReadingView.as_view(), name="lovereading"),
     path("expandedreading", views.ExpandedReadingView.as_view(), name="expandedreading"),

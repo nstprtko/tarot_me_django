@@ -12,7 +12,8 @@
   </head>
   
 
-  <body hx-headers='{"x-csrftoken": "{{ csrf_token}}"}'
+  <body
+  hx-headers='{"x-csrftoken": "{{ csrf_token}}"}'
   style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
     <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                 background: url('{% static "images/background_cards.png" %}') center/cover no-repeat; opacity: 80%;
@@ -40,45 +41,25 @@
           <img src={% static "images/animal.png" %} alt="Icon Cat" width="40" height="40" class="d-inline-block" style="filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));"></div>
       </div>
     </nav>
-    <div class="container-fluid d-flex justify-content-center gap-3 mt-4">
-    <button hx-get="{% url 'readings:randomcard' %}"
-        hx-target="#main"
-        hx-swap="innerHTML"
-        hx-push-url="true"
-        class="btn px-5 py-3"
-        style="background: #7B6E70;
-        border-radius: 15px;
-        font-size: 1.2rem;
-        box-shadow: 0 2px 4px #665b5dff;
-        color: #C7BDBC;">
-        Card of the day
-      </button>
-      <button hx-get="{% url 'readings:lovereading' %}"
-        hx-target="#main"
-        hx-swap="innerHTML"
-        hx-push-url="true"
-        class="btn px-5 py-3"
-        style="background: #7B6E70;
-        border-radius: 15px;
-        font-size: 1.2rem;
-        box-shadow: 0 2px 4px #665b5dff;
-        color: #C7BDBC;">
-            Ask about love
-      </button>
+
+
+
+    
 {% endif%}
 
-     {% block content %}
-      {% endblock content %}
+{% block content %}
+{% endblock content %}
 
       {% if not request.htmx %}
 
-      {% endif%}
-</div>
+      
+ 
 
       
     
     <script src={% static 'js/bootstrap.js' %}></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
-  
-  
+    
+
 </html>
+{% endif%}

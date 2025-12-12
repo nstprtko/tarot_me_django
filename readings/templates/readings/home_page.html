@@ -1,0 +1,37 @@
+{% extends "readings/base_layout.html" %}
+{% load static %}
+
+
+{% block content %}
+<div id='main'>
+</div>
+
+<div class="container-fluid d-flex justify-content-center gap-3 mt-4">
+    <button hx-get="{% url 'readings:randomcard' %}"
+        hx-target="#main"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+        class="btn px-5 py-3"
+        style="background: #7B6E70;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 4px #665b5dff;
+        color: #C7BDBC;">
+        Card of the day
+      </button>
+      <button hx-get="{% url 'readings:lovereading' %}"
+        hx-target="#main"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+        class="btn px-5 py-3"
+        style="background: #7B6E70;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 4px #665b5dff;
+        color: #C7BDBC;">
+            Ask about love
+      </button>
+</div>
+
+      
+{% endblock content %}
