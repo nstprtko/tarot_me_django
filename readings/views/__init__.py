@@ -9,12 +9,10 @@ import random
 import json
 import requests
 from pathlib import Path
-from django.views.generic import TemplateView 
-from random import choice, sample
-from ..models import Card
 import os
 from openai import OpenAI 
 from .homepage import HomePageView 
+#from .random_card import CardOfTheDayService #why doesnt it work?
 
 
     
@@ -76,64 +74,7 @@ class ReadingService:
         return response.choices[0].message.content.strip()
         
         
-    
-           
-
-class CardOfTheDayService(ReadingService):
-    INSTRUCTION="You are a mystical, whimsical tarot reader. Provide brief, inspiring daily guidance."
-
-class ExpandedReadingService(ReadingService):
-    INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about persons life and prospects. Use only 3 sentences"
-
-class LoveReadingService(ReadingService):
-     INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about love and the person that comes to users life.Use only 3 sentences "
-
-
-
-
-class RandomCardView(TemplateView):
-    template_name = 'readings/random_card.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        pks = Card.objects.values_list('pk', flat=True)
-        random_pk = choice(pks)
-        random_obj = Card.objects.get(pk=random_pk)
-        card_of_the_day=CardOfTheDayService()
-        meaning = card_of_the_day.generate_interpretation(random_obj.name, random_obj.upright)
-        context['card'] = random_obj
-        context['meaning'] = meaning
-        return context
-    
-    
       
-class LoveReadingView(TemplateView):
-    template_name= 'readings/love_reading.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        pks = list(Card.objects.values_list('pk', flat=True))
-        random_pks = sample(pks, 3)
-        random_objs = list(Card.objects.filter(pk__in=random_pks))
-        love_reading=LoveReadingService()
-        meaning = love_reading.generate_reading_multuple(random_objs)
-        context['cards'] = random_objs
-        context['meaning'] = meaning
-        return context
-    
-class ExpandedReadingView(TemplateView):
-    template_name= 'readings/reading.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        pks = list(Card.objects.values_list('pk', flat=True))
-        random_pks = sample(pks, 3)
-        random_objs = list(Card.objects.filter(pk__in=random_pks))
-        expanded_reading=ExpandedReadingService()
-        meaning = expanded_reading.generate_reading_multuple(random_objs)
-        context['cards'] = random_objs
-        context['meaning'] = meaning
-        return context
-        
-    
 def policy_view(request):
     return render(request, "readings/policy.html")
 
