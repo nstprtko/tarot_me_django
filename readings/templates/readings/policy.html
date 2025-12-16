@@ -1,7 +1,7 @@
+{% extends "readings/base_layout.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +9,9 @@
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 </head>
 
-<body style="margin: 0; padding: 20px; font-family: 'Times New Roman', serif; background: #f6f4f7;">
+<body style="margin: 0; padding: 20px; font-family: 'Times New Roman', serif; background: #7B6E70;">
 
-    <div class="container mt-4 p-4" style="max-width: 800px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div class="container mt-4 p-4" style="max-width: 800px; background: #e6e2da; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
         <h1 class="mb-3" style="color: #513f53;">Privacy Policy — TarotMe</h1>
         <p><em>Last updated: 09.12.25</em></p>
 
@@ -77,3 +77,4 @@
 </body>
 </html>
 
+{% endblock content %}
