@@ -37,4 +37,4 @@ class ExpandedReadingView(TemplateView):
         })
     
 class ExpandedReadingService(ReadingService):
-    INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about persons life and prospects. Use only 3 sentences"
+    INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about persons life and prospects. Explain the meaning of the cards and give guidence."

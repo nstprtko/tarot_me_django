@@ -9,6 +9,7 @@ from .views.love_reading import LoveReadingView
 app_name = "readings"
 
 urlpatterns = [
+     path('', HomePageView.as_view(), name='home'),
     path("homepage", HomePageView.as_view(), name="homepage"),
     path("randomcard", RandomCardView.as_view(), name="randomcard"),
     path("lovereading", LoveReadingView.as_view(), name="lovereading"),

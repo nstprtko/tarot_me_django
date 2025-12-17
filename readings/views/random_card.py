@@ -8,7 +8,7 @@ class CardOfTheDayView(TemplateView):
     template_name= 'readings/random_card.html'
     
 class CardOfTheDayService(ReadingService):
-    INSTRUCTION="You are a mystical, whimsical tarot reader. Provide brief, inspiring daily guidance."
+    INSTRUCTION="You are a mystical, whimsical tarot reader. Provide a brief explanation for this card for the day."
     
 class RandomCardView(TemplateView):
     template_name = 'readings/random_card.html'
