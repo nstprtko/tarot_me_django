@@ -49,15 +49,49 @@
     </button>
 </div>
 
-<footer class="text-center mt-5">
-  <p>
-      <a href="mailto:tarotme2025@gmail.com">tarotme2025@gmail.com</a> <br>
-      Authors: <br>
-      Anastasiia Prytyko <br>
-      Solomiia Vikovych <br>
-      Polina Minkova <br>
-      Oleksandra Kasatkina<br>
-  </p>
+<div style="min-height: 90vh;"></div>
+<footer class="container-fluid py-4"
+        style="
+        background: rgba(255, 255, 255, 0.15); 
+        backdrop-filter: blur(8px);
+        width: 100%;
+    ">
+
+    <div class="row align-items-center px-5">
+
+        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <a href="{% url 'readings:policy' %}"
+               class="btn"
+               style="
+                    background: rgba(123, 110, 112, 0.85);
+                    color: #C7BDBC;
+                    border-radius: 12px;
+                    padding: 10px 22px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+               ">
+                Privacy Policy
+            </a>
+        </div>
+
+        <div class="col-md-6 text-center text-md-end"
+             style="
+                font-size: 0.85rem;
+                color: #4a3b4f;
+                line-height: 1.6;
+             ">
+            <a href="mailto:tarotme2025@gmail.com"
+               style="color: #4a3b4f; text-decoration: none;">
+                tarotme2025@gmail.com
+            </a>
+            <br>
+            © 2025 TarotMe
+            <br>
+            Anastasiia Prytyko · Solomiia Vikovych · Polina Minkova · Oleksandra Kasatkina
+        </div>
+
+    </div>
 </footer>
+
+
       
 {% endblock content %}
