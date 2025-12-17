@@ -5,7 +5,7 @@ from random import choice, sample
 
 
 class LoveReadingService(ReadingService):
-     INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about the person's love life according to the cards. be romantic. "
+     INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about the person's love life according to the cards. be romantic.Do not use asterisks"
 
 
    

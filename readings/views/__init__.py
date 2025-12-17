@@ -21,7 +21,7 @@ from .homepage import HomePageView
 class ReadingService:
     HOST = getattr(settings, "OLLAMA_HOST", "http://localhost:11434")
     MODEL = getattr(settings, "OLLAMA_MODEL", "llama3")
-    INSTRUCTION = "You are a mystical tarot reader. Interpret the cards as past, present, future"
+    INSTRUCTION = "You are a mystical tarot reader. Interpret the cards. Do not use asterisks."
        
     def __init__(self):
         self.client = OpenAI(
@@ -32,7 +32,7 @@ class ReadingService:
     def format_message(self, card_name, card_meaning):
         return f"""Card of the day: {card_name},
                 Meaning : {card_meaning}
-                Provide a whimsical, inspiring interpretation of guidance. Maximum 3 sentences"""
+                Provide a brief explanation for this card for the day.Do not use asterisks"""
                 
                 
     def generate_interpretation(self, card_name, card_meaning):
@@ -59,10 +59,10 @@ class ReadingService:
         # strip ;) is actully not nessesary 
         
     def generate_reading_multuple(self, cards):
-        positions =["Past","Present","Future"]
+        
         message = ""
         for i, card in enumerate(cards):
-            message += f"Interpret in maximum 3 sentences: {positions[i]}: {card.name} - {card.upright}\n"
+            message += f"Interpret in maximum 3 sentences:  {card.name} - {card.upright}\n"
         
         response = self.client.chat.completions.create(
             model=self.MODEL,

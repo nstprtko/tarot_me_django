@@ -20,7 +20,7 @@ def generate_ai_reading(cards, reading_type="general"):
     Returns text or an error string.
     """
     summary = ", ".join([f"{c['name']} ({'reversed' if c.get('reversed') else 'upright'})" for c in cards])
-    prompt = f"You are a mystical tarot reader. Interpret the cards as past, present, future: {summary}."
+    prompt = f"You are a mystical tarot reader. Interpret the cards.: {summary}."
     if reading_type == "love":
         prompt = "Write the following reading in a romantic, empathetic tone. " + prompt
 
