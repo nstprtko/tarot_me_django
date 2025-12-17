@@ -7,33 +7,46 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center gap-3 mt-4">
+   <button 
+    hx-get="{% url 'readings:randomcard' %}"
+    hx-target="#page"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    hx-indicator="this" 
+    class="btn px-5 py-3 d-flex align-items-center justify-content-center gap-2"
+    style="background: #7B6E70;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 4px #665b5dff;
+        color: #C7BDBC;">
+    <img class="htmx-indicator" 
+         src="/static/images/spinner.gif" 
+         alt="Loading..." 
+         style="width: 40px; height: 40px;"> 
+    
+    Card of the day
+
+    </button>
     <button 
-        hx-post="/example" 
-        hx-indicator="#spinner"
-        hx-get="{% url 'readings:randomcard' %}"
-        hx-target="#page"
-        hx-swap="outerHTML"
-        hx-push-url="true"
-        class="btn px-5 py-3"
-        style="background: #7B6E70;
+    hx-get="{% url 'readings:lovereading' %}"
+    hx-target="#page"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    hx-indicator="this" 
+    class="btn px-5 py-3 d-flex align-items-center justify-content-center gap-2"
+    style="background: #7B6E70;
         border-radius: 15px;
         font-size: 1.2rem;
         box-shadow: 0 2px 4px #665b5dff;
         color: #C7BDBC;">
-        Card of the day
-      </button>
-      <button hx-get="{% url 'readings:lovereading' %}"
-        hx-target="#page"
-        hx-swap="outerHTML"
-        hx-push-url="true"
-        class="btn px-5 py-3"
-        style="background: #7B6E70;
-        border-radius: 15px;
-        font-size: 1.2rem;
-        box-shadow: 0 2px 4px #665b5dff;
-        color: #C7BDBC;">
-            Ask about love
-      </button>
+    <img class="htmx-indicator" 
+         src="/static/images/spinner.gif" 
+         alt="Loading..." 
+         style="width: 40px; height: 40px;"> 
+    
+    Ask about love
+
+    </button>
 </div>
 
 <footer class="text-center mt-5">

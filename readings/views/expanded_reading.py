@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from .__init__ import ReadingService
 from ..models import Card
 from random import choice, sample
+from django.shortcuts import render
 
 class ExpandedReadingView(TemplateView):
     template_name= 'readings/reading.html'
@@ -15,6 +16,25 @@ class ExpandedReadingView(TemplateView):
         context['cards'] = random_objs
         context['meaning'] = meaning
         return context
+    def post(self, request, *args, **kwargs):
+        loaded_names= request.POST.getlist('loaded_cards')
+        existing_cards = list(Card.objects.filter(name__in=loaded_names))
+        existing_cards.sort(key=lambda c: loaded_names.index(c.name))
+        
+        if len(existing_cards) >= 9:
+            return render(request, self.template_name, {
+                'cards': existing_cards,
+                # Optional: Keep the old meaning or send a "Reading Complete" message
+                'meaning': "Your reading is complete. Reflect on these 9 cards." 
+            })
+        
+        new_cards = list(Card.objects.exclude(name__in=loaded_names).order_by('?')[:3])
+        meaning = ReadingService().generate_reading_multuple(new_cards)
+        
+        return render(request, self.template_name,{
+            'cards': existing_cards + new_cards,
+            'meaning': meaning
+        })
     
 class ExpandedReadingService(ReadingService):
     INSTRUCTION="You are a mystical, whimsical tarot reader. Provide sensual reading about persons life and prospects. Use only 3 sentences"

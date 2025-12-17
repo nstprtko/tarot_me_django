@@ -7,7 +7,8 @@
   
     
 {% block content %}
-    <div class="container-fluid min-vh-100 d-flex align-items-center">
+    <div id="wrapper"
+    class="container-fluid min-vh-100 d-flex align-items-center">
       <div class="container mt-0"> 
           <div class="row min-vh-100 align-items-center">
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-9">
@@ -19,12 +20,13 @@
                 color: #C7BDBC;
                 margin-left: -100px;">
                 <h2 class="mb-4" style="font-size: 2rem; font-weight: 300;">
-                   {% for card in cards %}
+                   {% for card in card|slice:":3" %}
                                           {{ card.name }}
+                                          {% if not forloop.last%}, {% endif%}
                                           {% endfor %}
                 </h2>
                 <div class="text-center mt-5">
-                  <p class="mb-1" style="font-size: 1.1rem;"> {{card.meaning}} </p>
+                  <p class="mb-1" style="font-size: 1.1rem;"> {{ cards.0.meaning }} </p>
                   <p style="font-size: 1.1rem;"> {{ meaning }}</p>
                 </div>
               </div>
@@ -37,13 +39,13 @@
               <div class="d-flex align-items-end gap-3" style="max-width: 1000px;">
     
     
-          <div class="text-center" style="margin-bottom: 100px;">
+    <div class="text-center" style="margin-bottom: 100px;">
           <img src="{% static "cards/" %}{{cards.0.image}}" 
            alt="{{ cards.0.name }}" 
            class="img-fluid rounded shadow"
            style="max-width: 250px;">
       
-                </div>
+    </div>
     
     <!-- Middle card (raised higher) -->
     <div class="text-center" style="margin-bottom: 200px;">
@@ -65,15 +67,84 @@
     
   </div>
 </div>
-                
-                
-                
-            </div>
-            
-            
-          </div>
-        </div>
-      </div>
+
+{% if cards|length > 3 %}
+<div class="col-md-6 d-flex justify-content-center align-items-center">
+<div class="d-flex align-items-end gap-3" style="max-width: 1000px;">
+              
+    <div class="text-center" style="margin-bottom: 100px;">
+      <img src="{% static "cards/" %}{{cards.3.image}}" 
+           alt="{{ cards.3.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 250px;">
+      
+    </div>
+    
+    <!-- Middle card (raised higher) -->
+    <div class="text-center" style="margin-bottom: 200px;">
+      <img src="{% static "cards/" %}{{cards.4.image}}" 
+           alt="{{ cards.4.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 250px;">
+      
+    </div>
+    
+   
+    <div class="text-center" style="margin-bottom: 100px;">
+      <img src="{% static "cards/"%}{{cards.5.image}}" 
+           alt="{{ cards.5.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 250px;">
+      
+    </div>
+    
+    <div class="text-center" style="margin-bottom: 100px;">
+      <img src="{% static "cards/" %}{{cards.6.image}}" 
+           alt="{{ cards.6.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 250px;">
+      
+    </div>
+    
+    <!-- Middle card (raised higher) -->
+    <div class="text-center" style="margin-bottom: 200px;">
+      <img src="{% static "cards/" %}{{cards.7.image}}" 
+           alt="{{ cards.7.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 250px;">
+      
+    </div>
+    
+   
+    <div class="text-center" style="margin-bottom: 100px;">
+      <img src="{% static "cards/"%}{{cards.8.image}}" 
+           alt="{{ cards.8.name }}" 
+           class="img-fluid rounded shadow"
+           style="max-width: 250px;">
+      
+    </div>
+
+  </div>
+</div>
+ 
+
+{% endif %}
+{% if cards|length < 9 %}
+<form hx-post="" 
+      hx-select="#wrapper"
+      hx-target="#wrapper" 
+      hx-swap="outerHTML">
+    {% csrf_token %}
+    
+    {% for card in cards %}
+        <input type="hidden" name="loaded_cards" value="{{ card.name }}">
+    {% endfor %}
+
+    <button type="submit" class="btn btn-outline-light">
+        Expand Reading
+    </button>
+</form>
+{% endif %}
 {% endblock content %}
       
     
