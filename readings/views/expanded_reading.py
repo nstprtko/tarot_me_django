@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView 
-from .__init__ import ReadingService
+from .__init__ import CardOfTheDayService as ReadingService
 from ..models import Card
 from random import choice, sample
 from django.shortcuts import render

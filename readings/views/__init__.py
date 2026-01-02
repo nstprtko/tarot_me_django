@@ -12,7 +12,7 @@ from pathlib import Path
 import os
 from openai import OpenAI 
 from .homepage import HomePageView 
-# REMOVED BROKEN IMPORTS HERE
+
 
 # card of the day explanation, expanded readings, love readings explanation   
 class CardOfTheDayService:
