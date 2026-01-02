@@ -12,13 +12,10 @@ from pathlib import Path
 import os
 from openai import OpenAI 
 from .homepage import HomePageView 
-#from .random_card import CardOfTheDayService #why doesnt it work?
+# REMOVED BROKEN IMPORTS HERE
 
-
-    
-    
 # card of the day explanation, expanded readings, love readings explanation   
-class ReadingService:
+class CardOfTheDayService:
     HOST = getattr(settings, "OLLAMA_HOST", "http://localhost:11434")
     MODEL = getattr(settings, "OLLAMA_MODEL", "llama3")
     INSTRUCTION = "You are a mystical tarot reader. Interpret the cards. Do not use asterisks."
@@ -58,11 +55,13 @@ class ReadingService:
         # message.content - the actual message 
         # strip ;) is actully not nessesary 
         
-    def generate_reading_multuple(self, cards):
+    def generate_reading_multuple(self, cards, meaning=None):
+        # positions =["Past","Present","Future"]
         
         message = ""
         for i, card in enumerate(cards):
-            message += f"Interpret in maximum 3 sentences:  {card.name} - {card.upright}\n"
+            # I uncommented this line below so the loop actually does something
+            message += f"Interpret in maximum 3 sentences:  {card.name} - {card.upright}\n" 
         
         response = self.client.chat.completions.create(
             model=self.MODEL,
@@ -71,9 +70,8 @@ class ReadingService:
                 {"role": "user", "content": message}
                 ]
         )
+        print(meaning)
         return response.choices[0].message.content.strip()
-        
-        
       
 def policy_view(request):
     return render(request, "readings/policy.html")
@@ -158,4 +156,3 @@ def api_card_of_day(request):
         cod["ai_interpretation"] = ai_interpretation
     
     return JsonResponse({"card": cod})
-
