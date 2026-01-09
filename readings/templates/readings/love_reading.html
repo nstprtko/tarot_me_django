@@ -74,17 +74,24 @@
 
               
               <button hx-get ="{% url 'readings:lovereading' %}"
-                      hx-target="#reading-result"
-                      hx-indicator="#loading"
-                      class="btn px-5 py-3"
+                      hx-target="#page"
+                      hx-swap="outerHTML"
+                      hx-push-url="true"
+                      hx-indicator="this" 
+                      class="btn px-5 py-3 d-flex align-items-center justify-content-center gap-2"
                       style="background: #7B6E70;
-                      border-radius: 15px;
-                      font-size: 1.2rem;
-                      box-shadow: 0 2px 4px #665b5dff;
-                      color: #C7BDBC;"
-                      >
-              Expand the reading
-            </button>
+                          border-radius: 15px;
+                          font-size: 1.2rem;
+                          box-shadow: 0 2px 4px #665b5dff;
+                          color: #C7BDBC;">
+                      <img class="htmx-indicator" 
+                          src="/static/images/spinner.gif" 
+                          alt="Loading..." 
+                          style="width: 40px; height: 40px;"> 
+    
+            Expand Reading
+
+              </button>
             
             </div>
             
