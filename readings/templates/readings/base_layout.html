@@ -1,78 +1,133 @@
-{% load django_htmx static%}
+{% load django_htmx static %}
 {% if not request.htmx %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tarot Me - Card of the Day</title>
+
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     {% htmx_script %}
-    
-  </head>
-  <style>
-    
-.htmx-indicator {
-    display: none;
-}
 
+    <style>
+        .htmx-indicator {
+            display: none;
+        }
 
-.htmx-request .htmx-indicator,
-.htmx-request.htmx-indicator {
-    display: inline-block;
-}
-</style>
-  
+        .htmx-request .htmx-indicator,
+        .htmx-request.htmx-indicator {
+            display: inline-block;
+        }
+    </style>
+</head>
 
-  <body 
-  hx-headers='{"x-csrftoken": "{{ csrf_token}}"}'
-  style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: url('{% static 'images/background_cards.png' %}') center/cover no-repeat; opacity: 80%;
-                background-color: #625b71; z-index: -2;"></div>
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background:  rgba(98, 91, 113, 0.7); z-index: -1;"></div>
-     
+<body
+    hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'
+    class="d-flex flex-column min-vh-100"
+    style="margin: 0; padding: 0; font-family: Times New Roman, Times, serif;">
+
+    <div style="
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: url('{% static 'images/background_cards.png' %}') center/cover no-repeat;
+        opacity: 0.8;
+        z-index: -2;">
+    </div>
+
+    <div style="
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(98, 91, 113, 0.7);
+        z-index: -1;">
+    </div>
+
     <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid mx-4">
+        <div class="container-fluid mx-4">
 
             <a class="navbar-brand d-flex align-items-center" href="#">
-              <img src="{% static 'images/web.png' %} "
-              alt="Profile" 
-              width="30" 
-              height="30" 
-              class="d-inline-block me-2">
-            
-              <div style="line-height: 1.2;">
-                <div style="font-size: 0.9rem; color: #C7BDBC">My Profile</div>
-                <div style="font-size: 0.75rem; color: #C7BDBC; opacity: 0.8;">See Details</div>
-              </div>
+                <img src="{% static 'images/web.png' %}"
+                     alt="Profile"
+                     width="30"
+                     height="30"
+                     class="d-inline-block me-2">
+
+                <div style="line-height: 1.2;">
+                    <div style="font-size: 0.9rem; color: #C7BDBC;">My Profile</div>
+                    <div style="font-size: 0.75rem; color: #C7BDBC; opacity: 0.8;">See Details</div>
+                </div>
             </a>
-        <div class="position-absolute start-50 translate-middle-x d-flex align-items-center">
-          <span class="fs-2" style="letter-spacing: 2px; color: #C7BDBC"> TarotMe </span>
-          <img src="{% static 'images/animal.png' %}" alt="Icon Cat" width="40" height="40" class="d-inline-block" style="filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));"></div>
-      </div>
+
+            <div class="position-absolute start-50 translate-middle-x d-flex align-items-center">
+                <span class="fs-2" style="letter-spacing: 2px; color: #C7BDBC;">TarotMe</span>
+                <img src="{% static 'images/animal.png' %}"
+                     alt="Icon Cat"
+                     width="40"
+                     height="40"
+                     class="d-inline-block"
+                     style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));">
+            </div>
+        </div>
     </nav>
-  </div>
-  <main id='page' style="width: 100%; overflow-x: hidden;">
 
+    <main id="page" class="flex-grow-1" style="width: 100%; overflow-x: hidden;">
+{% endif %}
 
-    
-{% endif%}
-
-  {% block content %}
-  {% endblock content %}
+        {% block content %}
+        {% endblock content %}
 
 {% if not request.htmx %}
+    </main>
+    <div style="min-height: 90vh;"></div>
+    <footer class="container-fluid py-4 mt-auto"
+            style="
+                background: rgba(255, 255, 255, 0.35);
+                backdrop-filter: blur(8px);
+            ">
 
-      
- 
+        <div class="row align-items-center px-5">
 
-      
-    
-    <script src={% static 'js/bootstrap.js' %}></script>
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
-    
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <a href="{% url 'readings:policy' %}"
+                   class="btn"
+                   style="
+                        background: rgba(123, 110, 112, 0.85);
+                        color: #C7BDBC;
+                        border-radius: 12px;
+                        padding: 10px 22px;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                   ">
+                    Privacy Policy
+                </a>
+            </div>
 
+            <div class="col-md-6 text-center text-md-end"
+                 style="
+                    font-size: 0.85rem;
+                    color: #4a3b4f;
+                    line-height: 1.6;
+                 ">
+                <a href="mailto:tarotme2025@gmail.com"
+                   style="color: #4a3b4f; text-decoration: none;">
+                    tarotme2025@gmail.com
+                </a>
+                <br>
+                © 2025 TarotMe
+                <br>
+                Anastasiia Prytyko · Solomiia Vikovych · Polina Minkova · Oleksandra Kasatkina
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
+            integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
+            crossorigin="anonymous"></script>
+
+</body>
 </html>
-{% endif%}
+{% endif %}
+
