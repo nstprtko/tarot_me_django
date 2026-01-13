@@ -5,7 +5,7 @@
 
   
 {% block content %}
-  <div 
+  <div id="page"
   class="container mt-0">
     <div class="row min-vh-100 align-items-center">
       <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-9">
@@ -24,26 +24,24 @@
           </div>
         </div>
               
-            <button 
-    hx-get="{% url 'readings:expandedreading' %}"
-    hx-target="#page"
-    hx-swap="outerHTML"
-    hx-push-url="true"
-    hx-indicator="this" 
-    class="btn px-5 py-3 d-flex align-items-center justify-content-center gap-2"
-    style="background: #7B6E70;
-        border-radius: 15px;
-        font-size: 1.2rem;
-        box-shadow: 0 2px 4px #665b5dff;
-        color: #C7BDBC;">
-    <img class="htmx-indicator" 
-         src="/static/images/spinner.gif" 
-         alt="Loading..." 
-         style="width: 40px; height: 40px;"> 
-    
-    Expand your reding
-
-    </button>
+        <button 
+        hx-get="{% url 'readings:expandedreading' %}"
+        hx-target="#page"
+        hx-swap="outerHTML"
+        hx-push-url="true"
+        hx-indicator="this" 
+        class="btn px-5 py-3 d-flex align-items-center justify-content-center gap-2"
+        style="background: #7B6E70;
+          border-radius: 15px;
+          font-size: 1.2rem;
+          box-shadow: 0 2px 4px #665b5dff;
+          color: #C7BDBC;">
+        <img class="htmx-indicator" 
+          src="{% static 'images/spinner.gif' %}" 
+          alt="Loading..." 
+          style="width: 40px; height: 40px;"> 
+        Expand your reading
+      </button>
             
         </div>
             
