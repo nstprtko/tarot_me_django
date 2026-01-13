@@ -44,7 +44,12 @@
         z-index: -1;">
     </div>
 
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg"
+     style="
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+     ">
+ 
         <div class="container-fluid mx-4">
 
             <a class="navbar-brand d-flex align-items-center" href="#">
@@ -72,7 +77,16 @@
         </div>
     </nav>
 
-    <main id="page" class="flex-grow-1" style="width: 100%; overflow-x: hidden;">
+
+    <main id="page"
+    style="
+      width: 100%;
+      overflow-x: hidden;
+      padding-top: 4rem;
+    ">
+
+
+  
 {% endif %}
 
         {% block content %}
@@ -80,10 +94,11 @@
 
 {% if not request.htmx %}
     </main>
-    <div style="min-height: 90vh;"></div>
+    
+    <div style="min-height: 80vh;"></div>
     <footer class="container-fluid py-4 mt-auto"
             style="
-                background: rgba(255, 255, 255, 0.35);
+                background: rgba(255, 255, 255, 0.15);
                 backdrop-filter: blur(8px);
             ">
 
